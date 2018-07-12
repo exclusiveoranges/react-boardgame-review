@@ -15,13 +15,38 @@ export default class GameForm extends Component {
     this.setState({ genre });
   }
 
+  handleGameFormChange = (event) => {
+    this.setState({
+      name: event.target.value
+    })
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault()
+    const config = {
+      method: "POST",
+      headers: { "Content-Type": "application/json"},
+      body: JSON.stringify({
+          name: this.state.name,
+          genre: { id: this.state.genre.id, name: this.state.genre.name }
+          })
+    }
+
+    fetch('http://localhost:3000/boardgames', config)
+      .then(this.props.fetchGames())
+
+    }
+
+
   render() {
     return (
       <div className="gameform">
-        <form className="create">
+        <form className="create" onSubmit={this.handleSubmit}>
           <label>
             Name:
             <input
+              onChange={this.handleGameFormChange}
+              value={this.state.name}
               type="text"
               name="name"
               placeholder="Filter board games by name"

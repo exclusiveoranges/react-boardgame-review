@@ -5,7 +5,7 @@ const GamesTable = (props) => {
 
   const mapGames = () => {
   return props.games.map( game => {
-    return <Game game={game} />
+    return <Game game={game} key={game.id} />
     })
   }
 
@@ -22,9 +22,7 @@ const GamesTable = (props) => {
           </th>
         </tr>
       </tbody>
-      <tbody>
-        {mapGames()}
-      </tbody>
+      {mapGames()}
     </table>
 
   )
